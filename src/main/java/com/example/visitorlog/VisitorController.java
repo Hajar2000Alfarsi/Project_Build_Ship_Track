@@ -38,4 +38,16 @@ public class VisitorController {
                 .findFirst()
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+
+    //Remove a visitor
+    @DeleteMapping("/visitors/{id}")
+    public void deleteVisitor(@PathVariable Long id) {
+        boolean remove = visitors.removeIf(
+                visitor -> visitor.getId().equals(id)
+        );
+
+        if (!remove) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 }
