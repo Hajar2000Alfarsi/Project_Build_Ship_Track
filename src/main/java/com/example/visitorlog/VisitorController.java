@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -50,4 +51,14 @@ public class VisitorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    //Count num of visitor
+    @GetMapping("/visitors/count")
+    public Map<String, Integer> countVisitor() {
+        return Map.of("total:", visitors.size());
+    }
+
+
+
+
 }
