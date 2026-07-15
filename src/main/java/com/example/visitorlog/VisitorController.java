@@ -1,8 +1,7 @@
 package com.example.visitorlog;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +10,22 @@ import java.util.List;
 @RequestMapping("/api")
 public class VisitorController {
     private List<Visitor> visitors = new ArrayList<>();
-    private Long count = 1L;
+    private Long counter = 1L;
 
     //Return all visitors
     @GetMapping("/visitors")
-    public List<Visitor> getAllVisitors(){
-        return visitors;
+    public ResponseEntity<List<Visitor>> getAllVisitors(){
+        return ResponseEntity.ok(visitors);
     }
 
+    //Add a visitor (JSON body)
+    @PostMapping("/visitors")
+    public ResponseEntity<Visitor> addVisitor(@RequestBody Visitor visitor){
+        visitor.setId(counter);
+        counter++;
+        visitors.add(visitor);
+
+        return ResponseEntity.status(201).body(visitor);
+    }
 
 }
