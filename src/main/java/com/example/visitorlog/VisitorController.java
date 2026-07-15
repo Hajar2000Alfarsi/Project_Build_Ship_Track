@@ -58,7 +58,14 @@ public class VisitorController {
         return Map.of("total:", visitors.size());
     }
 
-
+    //Health endpint
+    @GetMapping("/health")
+    public Map<String, String> health() {
+        return Map.of(
+                "status","UP",
+                "developer","Hajar"
+        );
+    }
 
 
 }
