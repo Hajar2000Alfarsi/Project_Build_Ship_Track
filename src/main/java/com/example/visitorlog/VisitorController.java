@@ -1,7 +1,9 @@
 package com.example.visitorlog;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,4 +30,12 @@ public class VisitorController {
         return ResponseEntity.status(201).body(visitor);
     }
 
+    //Return one visitor
+    @GetMapping("/visitors/{id}")
+    public Visitor getVisitor(@PathVariable Long id) {
+        return visitors.stream()
+                .filter(visitor -> visitor.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }
