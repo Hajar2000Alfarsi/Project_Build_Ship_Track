@@ -67,5 +67,20 @@ public class VisitorController {
         );
     }
 
+    //update visitor
+    @PutMapping("/visitors/{id}")
+    public ResponseEntity<Visitor> updateVisitor(@PathVariable Long id,
+                                                 @RequestBody Visitor updateVisitor) {
+        for (Visitor v : visitors) {
+            if (v.getId().equals(id)) {
+                v.setName(updateVisitor.getName());
+                v.setCompany(updateVisitor.getCompany());
+                v.setPurpose(updateVisitor.getPurpose());
 
+                return ResponseEntity.ok(v);
+            }
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 }
