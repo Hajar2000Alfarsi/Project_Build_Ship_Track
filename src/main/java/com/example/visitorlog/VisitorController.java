@@ -83,4 +83,22 @@ public class VisitorController {
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
+    //filter by purpose
+    @GetMapping("/visitors/filter")
+    public ResponseEntity<List<Visitor>> getVisitorByPurpose(
+            @RequestParam(required = false) String purpose) {
+        if (purpose == null) {
+            return ResponseEntity.ok(visitors);
+        }
+
+
+        List<Visitor> filteredVisitors = visitors.stream()
+                .filter(visitor ->
+                        visitor.getPurpose().equalsIgnoreCase(purpose)
+                )
+                .toList();
+
+        return ResponseEntity.ok(filteredVisitors);
+    }
 }
